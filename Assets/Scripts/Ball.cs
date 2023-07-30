@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Arkanoid
 {
@@ -7,11 +8,11 @@ namespace Arkanoid
         #region Variables
 
         [SerializeField] private Rigidbody2D _rb;
-        [SerializeField] private Vector2 _startVelocity;
         [SerializeField] private Platform _platform;
         private bool _isStarted;
 
         private Vector3 _offset;
+        private Vector2 _randomFloat;
 
         #endregion
 
@@ -19,6 +20,8 @@ namespace Arkanoid
 
         private void Start()
         {
+            _randomFloat.x = Random.Range(-10f, 10f);
+            _randomFloat.y = 10f;
             _offset = transform.position - _platform.transform.position;
         }
 
@@ -37,6 +40,14 @@ namespace Arkanoid
             }
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Trigger"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+        }
+
         #endregion
 
         #region Private methods
@@ -50,8 +61,9 @@ namespace Arkanoid
 
         private void StartBall()
         {
+           
             _isStarted = true;
-            _rb.velocity = _startVelocity;
+            _rb.velocity = _randomFloat;
         }
 
         #endregion
