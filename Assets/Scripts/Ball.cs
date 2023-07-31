@@ -20,9 +20,7 @@ namespace Arkanoid
 
         private void Start()
         {
-            _randomFloat.x = Random.Range(-10f, 10f);
-            _randomFloat.y = 10f;
-            _offset = transform.position - _platform.transform.position;
+            StartVector();
         }
 
         private void Update()
@@ -42,10 +40,7 @@ namespace Arkanoid
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.CompareTag("Trigger"))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
+            ReloadScene(collision);
         }
 
         #endregion
@@ -59,13 +54,32 @@ namespace Arkanoid
             transform.position = platformPosition;
         }
 
+        private static void ReloadScene(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Trigger"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                CurrentGlassPoints.GlassPoints = 0;
+                CurrentWoodPoints.WoodPoints = 0;
+                CurrentMetalPoints.MetalPoints = 0;
+                CurrentStonePoints.StonePoints = 0;
+            }
+        }
+
         private void StartBall()
         {
-           
             _isStarted = true;
             _rb.velocity = _randomFloat;
         }
 
+        private void StartVector()
+        {
+            _randomFloat.x = Random.Range(-10f, 10f);
+            _randomFloat.y = 10f;
+            _offset = transform.position - _platform.transform.position;
+        }
+
         #endregion
+        
     }
 }

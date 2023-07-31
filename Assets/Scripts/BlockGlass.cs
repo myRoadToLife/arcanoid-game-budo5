@@ -6,6 +6,8 @@ namespace Arkanoid
     {
         #region Variables
 
+        private readonly int _currentPoint = 1;
+
         private int _lives = 2;
 
         #endregion
@@ -19,6 +21,7 @@ namespace Arkanoid
                 _lives--;
                 if (_lives == 0)
                 {
+                    CurrentGlassPoints.GlassPoints += _currentPoint;
                     Destroy(gameObject);
                 }
             }

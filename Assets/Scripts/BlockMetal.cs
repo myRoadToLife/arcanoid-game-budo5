@@ -7,6 +7,8 @@ namespace Arkanoid
         #region Variables
 
         private int _lives = 5;
+        private readonly int _currentPoint = 6;
+
 
         #endregion
 
@@ -19,6 +21,7 @@ namespace Arkanoid
                 _lives--;
                 if (_lives == 0)
                 {
+                    CurrentMetalPoints.MetalPoints += _currentPoint;
                     Destroy(gameObject);
                 }
             }

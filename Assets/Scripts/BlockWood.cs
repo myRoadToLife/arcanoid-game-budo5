@@ -6,7 +6,9 @@ namespace Arkanoid
     {
         #region Variables
 
-        private int _lives = 3;
+        private readonly int _currentPoint = 2;
+
+        private int _lives = 2;
 
         #endregion
 
@@ -19,6 +21,7 @@ namespace Arkanoid
                 _lives--;
                 if (_lives == 0)
                 {
+                    CurrentWoodPoints.WoodPoints += _currentPoint;
                     Destroy(gameObject);
                 }
             }
