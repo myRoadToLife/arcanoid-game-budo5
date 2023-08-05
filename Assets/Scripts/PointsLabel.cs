@@ -3,11 +3,13 @@ using UnityEngine;
 
 namespace Arkanoid
 {
-    public class CurrentWoodPoints : MonoBehaviour
+    public class PointsLabel : MonoBehaviour
     {
         #region Variables
 
-        public static int WoodPoints;
+        [SerializeField] private BlockType _blockType;
+        [SerializeField] private string _prefix;
+
         private TMP_Text _text;
 
         #endregion
@@ -21,11 +23,9 @@ namespace Arkanoid
 
         private void Update()
         {
-            _text.text = $"Wood: {WoodPoints.ToString()}";
+            _text.text = $"{_prefix}:{PointService.GetPoints(_blockType)}";
         }
 
         #endregion
-
-        //TODO: Сделать очки и текст для каждого блока!
     }
 }

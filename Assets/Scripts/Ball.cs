@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Arkanoid
 {
@@ -9,6 +8,11 @@ namespace Arkanoid
 
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private Platform _platform;
+        [SerializeField] private int _speedBall = 10;
+        [SerializeField] private int _speedMaxX = 10;
+        [SerializeField] private int _speedMinX = 3;
+        [SerializeField] private int _speedY = 10;
+
         private bool _isStarted;
 
         private Vector3 _offset;
@@ -20,7 +24,7 @@ namespace Arkanoid
 
         private void Start()
         {
-            StartVector();
+            _offset = transform.position - _platform.transform.position;
         }
 
         private void Update()
@@ -38,11 +42,6 @@ namespace Arkanoid
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            ReloadScene(collision);
-        }
-
         #endregion
 
         #region Private methods
@@ -54,32 +53,19 @@ namespace Arkanoid
             transform.position = platformPosition;
         }
 
-        private static void ReloadScene(Collider2D collision)
-        {
-            if (collision.gameObject.CompareTag("Trigger"))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                CurrentGlassPoints.GlassPoints = 0;
-                CurrentWoodPoints.WoodPoints = 0;
-                CurrentMetalPoints.MetalPoints = 0;
-                CurrentStonePoints.StonePoints = 0;
-            }
-        }
-
         private void StartBall()
         {
             _isStarted = true;
-            _rb.velocity = _randomFloat;
+            _rb.velocity = StartVector();
         }
 
-        private void StartVector()
+        private Vector2 StartVector()
         {
-            _randomFloat.x = Random.Range(-10f, 10f);
-            _randomFloat.y = 10f;
-            _offset = transform.position - _platform.transform.position;
+            float x = Random.Range(-_speedMinX, _speedMaxX);
+            float y = _speedY;
+            return new Vector2(x, y).normalized * _speedBall;
         }
 
         #endregion
-        
     }
 }
